@@ -90,6 +90,7 @@ docker-compose up --build
 Once the container is running, access:
 
 - **API Base URL**: `http://localhost:8080/api/v1`
+- **Use this provided Postman collection to play around : (docs/RAG_Chat_Storage.postman_collection.json)
 - **Swagger UI**: `http://localhost:8080/swagger-ui.html`
 - **Health Check**: `http://localhost:8080/actuator/health`
 - **H2 Console**: `http://localhost:8080/h2-console` (if `ENABLE_H2_CONSOLE=true`)
