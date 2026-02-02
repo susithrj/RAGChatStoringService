@@ -1,0 +1,79 @@
+spring:
+  application:
+    name: rag-chat-storage-service
+  
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:dev}
+  
+  datasource:
+    url: jdbc:h2:file:${H2_DATABASE_PATH:./data/ragchat}
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: 
+  
+  h2:
+    console:
+      enabled: ${ENABLE_H2_CONSOLE:false}
+      path: /h2-console
+      settings:
+        web-allow-others: ${H2_CONSOLE_WEB_ALLOW_OTHERS:true}
+  
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.H2Dialect
+  
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+
+server:
+  port: ${SERVER_PORT:8080}
+  shutdown: graceful
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+      base-path: /actuator
+  endpoint:
+    health:
+      show-details: when-authorized
+      probes:
+        enabled: true
+      group:
+        db:
+          include: db
+
+logging:
+  level:
+    root: ${LOG_LEVEL:INFO}
+    com.codegensis.ragstore: ${LOG_LEVEL:INFO}
+    # Suppress verbose RMI/JMX logs
+    sun.rmi: WARN
+    java.rmi: WARN
+    javax.management: WARN
+    java.lang.management: WARN
+    # Suppress Tomcat/Coyote EOFExceptions (harmless connection closures from health checks)
+    org.apache.tomcat: WARN
+    org.apache.coyote: WARN
+    org.apache.catalina: WARN
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+
+app:
+  api:
+    key:
+      primary: ${API_KEY_PRIMARY:}
+      secondary: ${API_KEY_SECONDARY:}
+  rate-limit:
+    api-key-per-minute: ${RATE_LIMIT_API_KEY_PER_MINUTE:60}
+  h2:
+    database-path: ${H2_DATABASE_PATH:./data/ragchat}

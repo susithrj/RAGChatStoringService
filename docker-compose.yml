@@ -1,0 +1,42 @@
+services:
+  ragchat-storage:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: ragchat-storage-service
+    ports:
+      - "${SERVER_PORT:-8080}:8080"
+    # Load env.dev as default environment file (Docker Compose reads this)
+    env_file:
+      - env.dev
+    environment:
+      # Use env.dev values as defaults (development-friendly defaults)
+      # API keys are loaded from env.dev via env_file, no need to override here
+      - SPRING_PROFILES_ACTIVE=${SPRING_PROFILES_ACTIVE:-dev}
+      # Rate limits: loaded from env.dev via env_file (no override needed)
+      # Database: default from env.dev
+      - H2_DATABASE_PATH=${H2_DATABASE_PATH:-./data/ragchat}
+      # Logging: default from env.dev (DEBUG for development)
+      - LOG_LEVEL=${LOG_LEVEL:-DEBUG}
+      # H2 Console: default from env.dev (enabled for development)
+      - ENABLE_H2_CONSOLE=${ENABLE_H2_CONSOLE:-true}
+      # Sample data: default from env.dev (enabled for development)
+      - LOAD_SAMPLE_DATA=${LOAD_SAMPLE_DATA:-true}
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+      # Mount env.dev so Spring Boot's DotenvPropertySource can read it
+      - ./env.dev:/app/env.dev:ro
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8080/actuator/health"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 40s
+    restart: unless-stopped
+    networks:
+      - ragchat-network
+
+networks:
+  ragchat-network:
+    driver: bridge

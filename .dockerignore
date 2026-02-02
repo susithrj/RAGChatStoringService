@@ -1,0 +1,45 @@
+# Git
+.git
+.gitignore
+
+# IDE
+.idea
+*.iml
+
+# Build artifacts
+target/
+*.class
+*.jar
+*.war
+
+# Environment files
+.env
+env.dev
+env.qa
+env.prod
+env.example
+
+# Logs
+logs/
+*.log
+
+# Data
+data/
+*.mv.db
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Documentation
+README.md
+docs/
+
+# Maven wrapper (we copy it explicitly)
+# .mvn/
+
+
+
+# Test files
+*.test
+*.spec

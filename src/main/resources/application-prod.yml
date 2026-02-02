@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    url: jdbc:h2:file:${H2_DATABASE_PATH:./data/ragchat}
+  h2:
+    console:
+      enabled: false
+  jpa:
+    show-sql: false
+  lifecycle:
+    timeout-per-shutdown-phase: 30s
+
+logging:
+  level:
+    root: WARN
+    com.codegensis.ragstore: INFO
+
+server:
+  shutdown: graceful

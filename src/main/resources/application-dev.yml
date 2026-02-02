@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    url: jdbc:h2:file:${H2_DATABASE_PATH:./data/ragchat}
+  h2:
+    console:
+      enabled: true
+      settings:
+        web-allow-others: true
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+logging:
+  level:
+    root: DEBUG
+    com.codegensis.ragstore: DEBUG

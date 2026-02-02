@@ -1,0 +1,34 @@
+
+
+# Logs
+logs/
+*.log
+
+# Data
+data/
+*.mv.db
+
+# IDE
+.idea/
+*.iml
+*.swp
+*.swo
+*~
+
+# Build
+target/
+*.class
+*.jar
+*.war
+!mvnw
+!mvnw.cmd
+
+# OS
+.DS_Store
+Thumbs.db
+.DS_Store?
+
+# Temporary files
+*.tmp
+*.bak
+*.cache
