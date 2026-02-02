@@ -829,12 +829,8 @@ This section documents key architectural decisions made during the design and im
 
 ### Test Coverage
 
-The project includes comprehensive test coverage:
+<img width="1197" height="465" alt="image" src="https://github.com/user-attachments/assets/d136e7b9-2222-442c-bc39-e33af9dff88c" />
 
-- **Unit tests** for service layer (`MessageService`, `SessionService`)
-- **Repository tests** with `@DataJpaTest`
-- **Controller tests** with `@WebMvcTest`
-- **Integration tests** with `@SpringBootTest`
 
 ### Viewing Coverage Report
 
