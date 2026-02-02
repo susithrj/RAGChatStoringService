@@ -93,7 +93,7 @@ Once the container is running, access:
 - **Swagger UI**: `http://localhost:8080/swagger-ui.html`
 - **Health Check**: `http://localhost:8080/actuator/health`
 - **H2 Console**: `http://localhost:8080/h2-console` (if `ENABLE_H2_CONSOLE=true`)
-
+For more information about H2 console : [Accessing H2 Database Console](#accessing-h2-database-console)
 ### Docker Setup Options
 
 **Recommended: Using .env File**
