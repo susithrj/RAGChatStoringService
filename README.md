@@ -68,11 +68,15 @@ A production-ready Spring Boot microservice for storing and managing chat histor
 #### 1. Generate and Set API Key
 
 ```bash
-# Generate API key
+# Generate API key (Recommended)
 openssl rand -hex 16
 
-# Set as environment variable
-export API_KEY_PRIMARY=your-generated-api-key-here
+# Create .env file from example or use env.dev file
+cp env.example .env
+
+# Edit .env and set your API key
+# Open .env in your editor and add:
+# API_KEY_PRIMARY=your-generated-api-key-here or custom key 
 ```
 
 #### 2. Build and Run
@@ -92,28 +96,31 @@ Once the container is running, access:
 
 ### Docker Setup Options
 
-**Option 1: Using Environment Variables**
+**Recommended: Using .env File**
+
+```bash
+# Create .env file from example
+cp env.example .env
+
+# Edit .env and set your API key and other settings
+# API_KEY_PRIMARY=your-api-key-here
+# SPRING_PROFILES_ACTIVE=dev
+# ENABLE_H2_CONSOLE=true
+# LOG_LEVEL=INFO
+
+# Run Docker Compose (automatically reads .env file)
+docker-compose up --build
+```
+
+**Alternative: Using Environment Variables**
+
+If you prefer to use environment variables instead of .env file:
 
 ```bash
 export API_KEY_PRIMARY=your-api-key-here
 export SPRING_PROFILES_ACTIVE=dev
 export ENABLE_H2_CONSOLE=true
 export LOG_LEVEL=INFO
-docker-compose up --build
-```
-
-**Option 2: Using .env File**
-
-```bash
-# Create .env file from example
-cp env.example .env
-
-# Edit .env and set your API key
-# API_KEY_PRIMARY=your-api-key-here
-# SPRING_PROFILES_ACTIVE=dev
-# ENABLE_H2_CONSOLE=true
-
-# Run Docker Compose (automatically reads .env file)
 docker-compose up --build
 ```
 
@@ -219,7 +226,7 @@ cp env.dev .env
 
 **Option C: Set environment variables directly**
 
-If you prefer not to use a `.env` file:
+If you prefer not to use a `.env` file, you can set environment variables directly:
 
 ```bash
 export API_KEY_PRIMARY=your-generated-api-key-here
@@ -227,6 +234,8 @@ export SPRING_PROFILES_ACTIVE=dev
 export ENABLE_H2_CONSOLE=true
 export LOG_LEVEL=DEBUG
 ```
+
+**Note**: Using `.env` file is recommended as it persists your configuration and doesn't require exporting variables each time.
 
 ##### 4. Build the Project
 
@@ -277,7 +286,7 @@ After successful startup, you can access:
 
 ### Using Docker
 
-1. **Set API key**: `export API_KEY_PRIMARY=your-api-key` or set in env file
+1. **Create .env file**: Copy `env.example` to `.env` and set `API_KEY_PRIMARY=your-api-key`
 2. **Start container**: `docker-compose up --build`
 3. **Access endpoints**: See [Docker Setup](#docker-setup) section above
 
@@ -856,14 +865,20 @@ Use the provided Postman collection (`docs/RAG_Chat_Storage.postman_collection.j
 
 **Error**: `API_KEY_PRIMARY is required`
 
-**Solution**: Set the `API_KEY_PRIMARY` environment variable or add it to your `.env` file:
+**Solution**: Add `API_KEY_PRIMARY` to your `.env` file:
 
 ```bash
-# Option 1: Environment variable
-export API_KEY_PRIMARY=your-primary-api-key
+# Create .env file from example (if not exists)
+cp env.example .env
 
-# Option 2: Add to .env file
-echo "API_KEY_PRIMARY=your-primary-api-key" >> .env
+# Edit .env and add your API key
+# API_KEY_PRIMARY=your-primary-api-key
+```
+
+Or if you prefer using environment variables:
+
+```bash
+export API_KEY_PRIMARY=your-primary-api-key
 ```
 
 #### 2. Database connection errors
@@ -970,7 +985,7 @@ This project fulfills all requirements from the Backend Developer Interview Case
 
 ### ✅ Technical Expectations
 - Environment-specific configurations (`.env` files, Spring profiles)
-- API key authentication (read from environment variables)
+- API key authentication (read from `.env` file or environment variables)
 - Rate limiting (60 requests per minute per API key)
 - Centralized logging (Logback with file and console appenders)
 - Global error handling (RFC 7807 compliant)
